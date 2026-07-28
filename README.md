@@ -1,213 +1,175 @@
+<!DOCTYPE html>
 <html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>E-Shopping - Belanja Murah</title>
+    <title>E-Shopping - Latihan Cyber Security</title>
     <style>
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f4f4f4; margin: 0; padding: 0; }
-        header { background-color: #232f3e; color: white; padding: 15px; display: flex; justify-content: space-between; align-items: center; }
-        .logo { font-size: 24px; font-weight: bold; }
-        .nav-btn { background: #febd69; border: none; padding: 10px 20px; cursor: pointer; font-weight: bold; margin-left: 10px; border-radius: 3px; }
-        
-        /* Container */
-        .container { max-width: 200px; margin: 0 auto; padding: 20px; text-align: center; }
-        .products-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 20px; padding: 20px; max-width: 1200px; margin: auto; }
-        
-        /* Product Card */
-        .card { background: white; padding: 15px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); cursor: pointer; transition: transform 0.2s; text-align: left; }
-        .card:hover { transform: scale(1.02); }
-        .card img { width: 100%; height: 150px; object-fit: cover; background: #ddd; }
-        .price { color: #b12704; font-size: 18px; font-weight: bold; margin: 10px 0; }
-        .meta { font-size: 12px; color: #555; display: flex; justify-content: space-between; }
-        
-        /* Forms */
-        .form-box { background: white; padding: 30px; max-width: 400px; margin: 50px auto; border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.2); text-align: center; }
-        input { width: 90%; padding: 10px; margin: 10px 0; border: 1px solid #ccc; border-radius: 4px; }
-        
-        /* Admin Panel */
-        .admin-panel { background: white; max-width: 800px; margin: 20px auto; padding: 20px; display: none; }
-        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
-        th, td { border: 1px solid #ddd; padding: 8px; text-align: center; }
-        th { background-color: #f2f2f2; }
+        *{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif}
+        body{background:#f0f2f5;color:#333}
+        .header{background:#1a73e8;color:white;padding:15px 20px;display:flex;justify-content:space-between;align-items:center}
+        .nav a{color:white;margin:0 10px;text-decoration:none}
+        .container{max-width:1200px;margin:20px auto;padding:0 15px}
+        .auth-box{background:white;padding:20px;border-radius:8px;box-shadow:0 2px 10px rgba(0,0,0,0.1);max-width:400px;margin:30px auto}
+        .auth-box h3{margin-bottom:15px;text-align:center}
+        input{width:100%;padding:10px;margin:8px 0;border:1px solid #ddd;border-radius:4px}
+        button{background:#1a73e8;color:white;border:none;padding:10px 15px;border-radius:4px;cursor:pointer;width:100%}
+        button:hover{background:#1557b0}
+        .produk-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:20px;margin-top:30px}
+        .kartu-produk{background:white;border-radius:8px;padding:15px;box-shadow:0 2px 8px rgba(0,0,0,0.1)}
+        .nama-produk{font-weight:bold;font-size:18px;margin-bottom:8px}
+        .harga{color:#e53935;font-size:20px;margin:8px 0}
+        .terjual{color:#666;font-size:13px}
+        .ulasan{margin:10px 0;color:#f57c00}
+        .komentar{border-top:1px solid #eee;margin-top:10px;padding-top:10px;font-size:14px;color:#444}
+        .komentar-item{margin:5px 0}
+        .tambah-komentar{margin-top:10px;padding-top:10px;border-top:1px dashed #ddd}
+        .tambah-komentar input{width:70%;display:inline-block}
+        .tambah-komentar button{width:28%;display:inline-block;padding:8px}
 
-        /* Utility */
-        .hidden { display: none; }
+        /* HALAMAN ADMIN */
+        .admin-body{background:#000;color:#0f0;padding:20px}
+        .kotak-admin{max-width:900px;margin:0 auto;border:1px solid #0f0;padding:20px;border-radius:8px}
+        .transaksi{border-bottom:1px solid #222;padding:10px 0}
+        .info-alih{color:#0ff;margin-bottom:15px;text-align:center}
     </style>
 </head>
 <body>
 
-    <!-- Header -->
-    <header>
-        <div class="logo">E-Shopping</div>
-        <div>
-            <button class="nav-btn" onclick="showLogin()">Login</button>
-            <button class="nav-btn" onclick="showSignup()">Sign Up</button>
-        </div>
-    </header>
+<div id="halaman_utama">
+<div class="header">
+    <h2>🛒 E-Shopping</h2>
+    <div class="nav">
+        <a href="#" onclick="tampilDaftar()">Daftar</a>
+        <a href="#" onclick="tampilLogin()">Masuk</a>
+    </div>
+</div>
 
-    <!-- Halaman Utama (Produk) -->
-    <div id="main-page">
-        <h2 style="text-align:center; margin-top:20px;">Rekomendasi Produk</h2>
-        <div class="products-grid" id="product-list">
-            <!-- Produk akan digenerate oleh JS -->
-        </div>
+<div class="container">
+    <div class="auth-box" id="formLogin">
+        <h3>Masuk Akun</h3>
+        <form onsubmit="cekLogin(event)">
+            <input type="text" id="user" placeholder="Email Pengguna" required>
+            <input type="password" id="pass" placeholder="Kata Sandi" required>
+            <button type="submit">Masuk</button>
+        </form>
     </div>
 
-    <!-- Form Sign Up -->
-    <div id="signup-page" class="container hidden">
-        <div class="form-box">
-            <h2>Sign Up</h2>
-            <input type="text" placeholder="Username">
-            <input type="email" placeholder="Email">
-            <button class="nav-btn" style="width:95%" onclick="handleSignup()">Daftar Sekarang</button>
-        </div>
+    <div class="auth-box" id="formDaftar" style="display:none">
+        <h3>Daftar Akun Baru</h3>
+        <form onsubmit="prosesDaftar(event)">
+            <input type="text" placeholder="Nama Lengkap" required>
+            <input type="email" placeholder="Email" required>
+            <input type="password" placeholder="Kata Sandi" required>
+            <button type="submit">Daftar Sekarang</button>
+        </form>
     </div>
 
-    <!-- Form Login -->
-    <div id="login-page" class="container hidden">
-        <div class="form-box">
-            <h2>Login Member</h2>
-            <input type="text" id="username" placeholder="Username (Contoh: root@...)">
-            <input type="password" id="password" placeholder="Password">
-            <button class="nav-btn" style="width:95%" onclick="handleLogin()">Masuk</button>
+    <div class="produk-grid" id="daftar_produk"></div>
+</div>
+</div>
+
+<div id="halaman_admin" style="display:none" class="admin-body">
+<div class="kotak-admin">
+    <h2 style="text-align:center;margin-bottom:20px">🔐 PANEL ADMIN - DAFTAR TRANSAKSI</h2>
+    <div class="info-alih">✅ Berhasil Masuk! Akan dialihkan ke Biner Code dalam 3 detik...</div>
+    <hr style="border-color:#0f0;margin:15px 0">
+    <div id="list_transaksi"></div>
+</div>
+</div>
+
+<script>
+const produk = [
+    {nama:"Laptop Gaming Pro X",harga:"Rp 14.500.000",terjual:"2.145 terjual",bintang:"⭐⭐⭐⭐⭐",komentar:["Barang bagus banget!","Pengiriman cepat respon ramah","Sangat direkomendasikan"]},
+    {nama:"Smartphone Ultra 5G",harga:"Rp 7.850.000",terjual:"5.672 terjual",bintang:"⭐⭐⭐⭐",komentar:["Kualitas mantap","Baterai awet","Kamera bagus"]},
+    {nama:"Headset Wireless Premium",harga:"Rp 850.000",terjual:"9.823 terjual",bintang:"⭐⭐⭐⭐⭐",komentar:["Suara jernih sekali","Nyaman dipakai lama","Sangat puas"]},
+    {nama:"Keyboard Mekanik RGB",harga:"Rp 425.000",terjual:"3.410 terjual",bintang:"⭐⭐⭐⭐",komentar:["Pencet enak banget","Lampunya keren","Harga pas"]},
+    {nama:"Mouse Gaming Cepat",harga:"Rp 275.000",terjual:"6.290 terjual",bintang:"⭐⭐⭐⭐⭐",komentar:["Sangat presisi","Ringan nyaman","Tahan lama"]},
+    {nama:"Monitor 27 Inci FullHD",harga:"Rp 1.890.000",terjual:"1.847 terjual",bintang:"⭐⭐⭐⭐",komentar:["Gambar tajam sekali","Desain elegan","Layar luas"]},
+    {nama:"SSD Cepat 1TB",harga:"Rp 650.000",terjual:"12.543 terjual",bintang:"⭐⭐⭐⭐⭐",komentar:["Sangat cepat","Pasang gampang","Penyimpanan lega"]},
+    {nama:"Kamera Web HD",harga:"Rp 195.000",terjual:"4.761 terjual",bintang:"⭐⭐⭐⭐",komentar:["Gambar jernih","Mikrofon bagus","Murah meriah"]},
+    {nama:"Kipas Pendingin Laptop",harga:"Rp 75.000",terjual:"8.912 terjual",bintang:"⭐⭐⭐⭐",komentar:["Efektif sekali","Senyap saat nyala","Murah bagus"]},
+    {nama:"Tas Laptop Anti Air",harga:"Rp 125.000",terjual:"7.328 terjual",bintang:"⭐⭐⭐⭐⭐",komentar:["Kain tebal","Muat banyak barang","Jahitan rapi"]},
+    {nama:"Kabel Data Fast Charging",harga:"Rp 45.000",terjual:"18.230 terjual",bintang:"⭐⭐⭐⭐⭐",komentar:["Isi daya cepat","Awet tidak mudah putus","Hemat uang"]},
+    {nama:"Stand HP Lipat",harga:"Rp 25.000",terjual:"22.150 terjual",bintang:"⭐⭐⭐⭐",komentar:["Praktis sekali","Bisa dilipat mudah dibawa","Harga murah"]},
+    {nama:"Kartu Memori 64GB",harga:"Rp 89.000",terjual:"15.678 terjual",bintang:"⭐⭐⭐⭐⭐",komentar:["Cepat menyimpan data","Tahan lama","Harga terjangkau"]},
+    {nama:"Headset Bluetooth",harga:"Rp 120.000",terjual:"9.345 terjual",bintang:"⭐⭐⭐⭐",komentar:["Suara jernih","Baterai awet seharian","Nyaman dipakai"]},
+    {nama:"Mouse Pad Besar",harga:"Rp 35.000",terjual:"11.234 terjual",bintang:"⭐⭐⭐⭐⭐",komentar:["Permukaan halus","Tidak licin","Awet dipakai"]}
+];
+
+let htmlProduk = "";
+produk.forEach((p, i) => {
+    htmlProduk += `
+    <div class='kartu-produk'>
+        <div class='nama-produk'>${p.nama}</div>
+        <div class='harga'>${p.harga}</div>
+        <div class='terjual'>${p.terjual}</div>
+        <div class='ulasan'>${p.bintang}</div>
+        <div class='komentar'>
+            <strong>Komentar Pembeli:</strong><br>
+            ${p.komentar.map(k=>`<div class='komentar-item'>• ${k}</div>`).join('')}
         </div>
-    </div>
-
-    <!-- Admin Panel -->
-    <div id="admin-page" class="container hidden">
-        <h2>Admin Dashboard</h2>
-        <p>Selamat datang, Root.</p>
-        
-        <div style="background: #e3f2fd; padding: 15px; border-radius: 5px;">
-            <h3>Fitur Transaksi: Biner Decode</h3>
-            <p>Mengarahkan otomatis...</p>
-            <div id="redirect-timer">Redirecting in 3 seconds...</div>
+        <div class='tambah-komentar'>
+            <input type='text' id='komentar_${i}' placeholder='Tambah komentar...'>
+            <button onclick='kirimKomentar(${i})'>Kirim</button>
         </div>
+    </div>`;
+});
+document.getElementById('daftar_produk').innerHTML = htmlProduk;
 
-        <table>
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>User</th>
-                    <th>Item</th>
-                    <th>Harga</th>
-                    <th>Status</th>
-                </tr>
-            </thead>
-            <tbody id="transaction-body">
-                <!-- 30 Transaksi akan digenerate -->
-            </tbody>
-        </table>
-    </div>
+function tampilDaftar(){
+    document.getElementById('formLogin').style.display='none';
+    document.getElementById('formDaftar').style.display='block';
+}
+function tampilLogin(){
+    document.getElementById('formDaftar').style.display='none';
+    document.getElementById('formLogin').style.display='block';
+}
 
-    <script>
-        // --- DATA PRODUK (Palsu) ---
-        const products = [
-            { name: "iPhone 15 Pro Max (KW)", price: "Rp 5.000.000", sold: 120, reviews: 5 },
-            { name: "Samsung Galaxy S24 Ultra (KW)", price: "Rp 4.500.000", sold: 89, reviews: 4 },
-            { name: "MacBook Air M3 (KW)", price: "Rp 7.000.000", sold: 45, reviews: 5 },
-            { name: "AirPods Pro Gen 2 (KW)", price: "Rp 800.000", sold: 300, reviews: 4 },
-            { name: "PlayStation 5 Slim (KW)", price: "Rp 6.500.000", sold: 210, reviews: 5 },
-            { name: "Nike Air Jordan (KW)", price: "Rp 350.000", sold: 500, reviews: 4 },
-            { name: "Laptop Gaming RTX 4090 (KW)", price: "Rp 12.000.000", sold: 15, reviews: 5 },
-            { name: "Kopi Susu Gula Aren (Botol)", price: "Rp 15.000", sold: 1000, reviews: 5 }
-        ];
+function prosesDaftar(e){
+    e.preventDefault();
+    alert("Bukan siapa-siapa kok mau daftar wkwkwk");
+}
 
-        // Render Produk
-        const productContainer = document.getElementById('product-list');
-        products.forEach(p => {
-            let stars = "★".repeat(p.reviews) + "☆".repeat(5 - p.rereviews);
-            let html = `
-                <div class="card" onclick="triggerXSS()">
-                    <img src="https://via.placeholder.com/200x150?text=${encodeURIComponent(p.name)}" alt="${p.name}">
-                    <h3>${p.name}</h3>
-                    <div class="price">${p.price}</div>
-                    <div class="meta">
-                        <span>${p.sold} Terjual</span>
-                        <span style="color:gold">${stars}</span>
-                    </div>
-                    <div style="margin-top:10px; font-size:12px; color:#333;">
-                        Komentar: "Barang bagus, cepet sampainya!" 
-                        <br><i>Ketik komentar:</i> <input type="text" style="width:80%; margin-top:5px;" placeholder="Tulis review...">
-                    </div>
-                </div>
-            `;
-            productContainer.innerHTML += html;
-        });
+// ✅ DIPERMUDAH DAN DIPASTIKAN BENAR
+function cekLogin(e){
+    e.preventDefault();
+    const user = document.getElementById('user').value;
+    const pass = document.getElementById('pass').value;
 
-        // --- FUNGSI NAVIGASI ---
-        function hideAll() {
-            document.getElementById('main-page').classList.add('hidden');
-            document.getElementById('login-page').classList.add('hidden');
-            document.getElementById('signup-page').classList.add('hidden');
-            document.getElementById('admin-page').classList.add('hidden');
-        }
+    // PERSIS SEPERTI YANG KAMU MINTA: username pas + sandi isi apa saja
+    if(user === "root@e-shopping.com'or 1=1 --+" && pass !== ""){
+        bukaAdmin();
+    }else{
+        alert("❌ SALAH! Salin username ini persis: root@e-shopping.com'or 1=1 --+ , sandi bebas apa saja");
+    }
+}
 
-        function showSignup() {
-            hideAll();
-            document.getElementById('signup-page').classList.remove('hidden');
-        }
+function bukaAdmin(){
+    document.getElementById('halaman_utama').style.display = 'none';
+    document.getElementById('halaman_admin').style.display = 'block';
+    
+    let trans = "";
+    for(let a=1;a<=30;a++){
+        trans += `<div class='transaksi'>Transaksi #${a} : Biner Decode - ${new Date().toLocaleString()}</div>`;
+    }
+    document.getElementById('list_transaksi').innerHTML = trans;
 
-        function showLogin() {
-            hideAll();
-            document.getElementById('login-page').classList.remove('hidden');
-        }
+    setTimeout(()=>{
+        window.location.href = "https://ftn-cyber.github.io/Biner-code/";
+    }, 3000);
+}
 
-        // --- LOGIKA SIGN UP (Alert) ---
-        function handleSignup() {
-            alert("Wkwkwk, data kamu sudah masuk! Mau daftar kok?");
-            showLogin();
-        }
-
-        // --- LOGIKA LOGIN (SQL Injection) ---
-        function handleLogin() {
-            const user = document.getElementById('username').value;
-            const pass = document.getElementById('password').value;
-
-            // SQL Injection Logic: Jika username mengandung string spesifik, abaikan password
-            if (user.includes("root@e-shopping.com'or 1=1 ---+")) {
-                openAdminPanel();
-            } else {
-                alert("Login Gagal! (Coba pakai user: root@e-shopping.com'or 1=1 ---+)");
-            }
-        }
-
-        // --- LOGIKA ADMIN PANEL & REDIRECT ---
-        function openAdminPanel() {
-            hideAll();
-            document.getElementById('admin-page').classList.remove('hidden');
-            
-            // Generate 30 Transaksi Palsu
-            const tbody = document.getElementById('transaction-body');
-            for(let i=1; i<=30; i++) {
-                let row = `<tr>
-                    <td>#${i}</td>
-                    <td>User_${i}@gmail.com</td>
-                    <td>Item Palsu ${i}</td>
-                    <td>Rp 100.000</td>
-                    <td>Selesai</td>
-                </tr>`;
-                tbody.innerHTML += row;
-            }
-
-            // Redirect Otomatis ke Link Biner
-            setTimeout(() => {
-                window.location.href = "https://ftn-cyber.github.io/Biner-code/";
-            }, 3000); // Redirect setelah 3 detik
-        }
-
-        // --- LOGIKA XSS (Command Injection) ---
-        function triggerXSS() {
-            // Command yang diminta: <img src=# onerror='alert(document.cookie)'/>
-            const command = "<img src=# onerror='alert(document.cookie)'/>";
-            
-            // Eksekusi Alert
-            alert(command);
-
-            // Redirect ke Link Base64
+function kirimKomentar(id){
+    const isi = document.getElementById(`komentar_${id}`).value;
+    if(isi.indexOf("document.cookie") !== -1){
+        setTimeout(()=>{
             window.location.href = "https://ftn-cyber.github.io/Base64/";
-        }
+        }, 500);
+    }
+    alert("✅ Komentar terkirim!");
+}
+</script>
 
-    </script>
 </body>
 </html>
